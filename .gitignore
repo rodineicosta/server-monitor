@@ -1,4 +1,10 @@
-# Configurações sensíveis
+# Binários grandes (>100MB) - baixar separadamente
+prometheus
+promtool
+blackbox_exporter
+pushgateway
+
+# Configurações sensíveis - NÃO COMITAR
 configs/sites.conf
 configs/prometheus.yml
 configs/realtime_config.json
