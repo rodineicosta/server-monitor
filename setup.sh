@@ -9,6 +9,41 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_DIR="$SCRIPT_DIR"
 cd "$PROJECT_DIR"
 
+# Verificar se os binários necessários existem
+echo "🔍 Verificando binários necessários..."
+missing_binaries=()
+if [ ! -f "prometheus" ]; then missing_binaries+=("prometheus"); fi
+if [ ! -f "promtool" ]; then missing_binaries+=("promtool"); fi
+if [ ! -f "blackbox_exporter" ]; then missing_binaries+=("blackbox_exporter"); fi
+if [ ! -f "pushgateway" ]; then missing_binaries+=("pushgateway"); fi
+
+if [ ${#missing_binaries[@]} -gt 0 ]; then
+    echo ""
+    echo "❌ Binários ausentes: ${missing_binaries[*]}"
+    echo ""
+    echo "📥 DOWNLOAD NECESSÁRIO:"
+    echo "======================="
+    echo ""
+    echo "1️⃣ Prometheus & Promtool:"
+    echo "   https://github.com/prometheus/prometheus/releases/latest"
+    echo ""
+    echo "2️⃣ Blackbox Exporter:"
+    echo "   https://github.com/prometheus/blackbox_exporter/releases/latest"
+    echo ""
+    echo "3️⃣ Pushgateway:"
+    echo "   https://github.com/prometheus/pushgateway/releases/latest"
+    echo ""
+    echo "📋 INSTRUÇÕES:"
+    echo "- Baixe os arquivos apropriados para sua plataforma (macOS/Linux/Windows)"
+    echo "- Extraia os binários para a raiz deste diretório: $PROJECT_DIR"
+    echo "- Execute este script novamente após o download"
+    echo ""
+    exit 1
+else
+    echo "✅ Todos os binários encontrados!"
+fi
+echo ""
+
 # 1. Verificar se arquivo de configuração existe
 if [ ! -f "configs/sites.conf" ]; then
     echo "📋 Criando arquivo de configuração..."

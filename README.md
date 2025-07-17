@@ -105,6 +105,12 @@ nano configs/crontab/crontab.txt
 
 **⚠️ SECURITY:** These files contain sensitive data and are **NOT COMMITTED** automatically.
 
+## Initial Setup
+
+```bash
+./setup.sh
+```
+
 ## 🔧 Active Services
 
 | Service | Port | Function |
@@ -134,17 +140,20 @@ nano configs/crontab/crontab.txt
 
 The system can be configured to **start automatically** after macOS reboot through LaunchAgent.
 
-### To enable:
+### To enable
+
 ```bash
 ./monitor.sh install-autostart
 ```
 
-### To disable:
+### To disable
+
 ```bash
 ./monitor.sh uninstall-autostart
 ```
 
-### Manual control:
+### Manual control
+
 ```bash
 # Disable temporarily
 launchctl unload ~/Library/LaunchAgents/com.monitoring.autostart.plist
@@ -185,13 +194,6 @@ launchctl load ~/Library/LaunchAgents/com.monitoring.autostart.plist
 - **Template-based configuration** system
 - **Real SSH log collection** with fallback to examples
 - **Portable scripts** with relative paths
-
-## 🔧 Installation
-
-1. **Clone the repository**
-2. **Run setup:** `bash setup.sh`
-3. **Configure sites:** Copy and edit `configs/sites.conf.example`
-4. **Start monitoring:** `./monitor.sh start`
 
 ---
 

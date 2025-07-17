@@ -105,6 +105,12 @@ nano configs/crontab/crontab.txt
 
 **⚠️ SEGURANÇA:** Estes arquivos contêm dados sensíveis e **NÃO SÃO COMMITADOS** automaticamente.
 
+## Setup Inicial
+
+```bash
+./setup.sh
+```
+
 ## 🔧 Serviços Ativos
 
 | Serviço | Porta | Função |
