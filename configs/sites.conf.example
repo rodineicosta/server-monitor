@@ -1,0 +1,48 @@
+# Configuração dos Sites - NUNCA COMITAR ESTE ARQUIVO
+# Este arquivo contém informações sensíveis dos sites monitorados
+
+# Sites principais para monitoramento HTTP/HTTPS
+SITES_HTTP=(
+    "https://site1.exemplo.com"
+    "https://site2.exemplo.com"
+    "https://site3.exemplo.com"
+    "https://site4.exemplo.com"
+    "https://site5.exemplo.com"
+    "https://site6.exemplo.com"
+    "https://site7.exemplo.com"
+    "https://site8.exemplo.com"
+    "https://site9.exemplo.com"
+    "https://site10.exemplo.com"
+    "https://site11.exemplo.com"
+    "https://site12.exemplo.com"
+)
+
+# Configuração de coleta de logs SSH
+SITES_LOGS=(
+    "site1:/caminho/para/log1"
+    "site2:/caminho/para/log2"
+    "site3:/caminho/para/log3"
+    "site4:/caminho/para/log4"
+    "site5:/caminho/para/log5"
+    "site6:/caminho/para/log6"
+    "site7:/caminho/para/log7"
+    "site8:/caminho/para/log8"
+    "site9:/caminho/para/log9"
+    "site10:/caminho/para/log10"
+    "site11:/caminho/para/log11"
+    "site12:/caminho/para/log12"
+)
+
+# Servidor SSH para coleta de logs
+SSH_SERVER="servidor.exemplo.com"
+
+# Caminhos sensíveis para verificação de segurança
+SENSITIVE_PATHS=(
+    "/.env"
+    "/wp-config.php"
+    "/config.php"
+    "/database.sql"
+    "/backup.sql"
+    "/.git/"
+    "/admin/"
+)

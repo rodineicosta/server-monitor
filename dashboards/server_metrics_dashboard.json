@@ -1,0 +1,141 @@
+{
+  "dashboard": {
+    "id": null,
+    "title": "Server Metrics - cPanel Monitoring",
+    "tags": ["server", "cpanel", "monitoring"],
+    "timezone": "browser",
+    "panels": [
+      {
+        "id": 1,
+        "title": "Memory Usage (MB)",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "server_memory_used_mb",
+            "refId": "A",
+            "legendFormat": "Used"
+          },
+          {
+            "expr": "server_memory_free_mb",
+            "refId": "B",
+            "legendFormat": "Free"
+          },
+          {
+            "expr": "server_memory_available_mb",
+            "refId": "C",
+            "legendFormat": "Available"
+          }
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0},
+        "fieldConfig": {
+          "defaults": {
+            "unit": "MB",
+            "color": {"mode": "palette-classic"}
+          }
+        }
+      },
+      {
+        "id": 2,
+        "title": "Memory Usage Over Time",
+        "type": "timeseries",
+        "targets": [
+          {
+            "expr": "server_memory_used_mb",
+            "refId": "A",
+            "legendFormat": "Used Memory (MB)"
+          },
+          {
+            "expr": "server_memory_free_mb",
+            "refId": "B",
+            "legendFormat": "Free Memory (MB)"
+          },
+          {
+            "expr": "server_memory_available_mb",
+            "refId": "C",
+            "legendFormat": "Available Memory (MB)"
+          }
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0},
+        "fieldConfig": {
+          "defaults": {
+            "unit": "MB",
+            "color": {"mode": "palette-classic"}
+          }
+        }
+      },
+      {
+        "id": 3,
+        "title": "Memory Usage Percentage",
+        "type": "piechart",
+        "targets": [
+          {
+            "expr": "server_memory_used_mb",
+            "refId": "A",
+            "legendFormat": "Used"
+          },
+          {
+            "expr": "server_memory_free_mb",
+            "refId": "B",
+            "legendFormat": "Free"
+          }
+        ],
+        "gridPos": {"h": 8, "w": 8, "x": 0, "y": 8},
+        "fieldConfig": {
+          "defaults": {
+            "unit": "MB"
+          }
+        }
+      },
+      {
+        "id": 4,
+        "title": "Disk Inodes Usage",
+        "type": "gauge",
+        "targets": [
+          {
+            "expr": "server_inodes_usage_percent",
+            "refId": "A",
+            "legendFormat": "Inodes Usage %"
+          }
+        ],
+        "gridPos": {"h": 8, "w": 8, "x": 8, "y": 8},
+        "fieldConfig": {
+          "defaults": {
+            "unit": "percent",
+            "min": 0,
+            "max": 100,
+            "thresholds": {
+              "steps": [
+                {"color": "green", "value": 0},
+                {"color": "yellow", "value": 70},
+                {"color": "red", "value": 90}
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": 5,
+        "title": "Server Status Summary",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "server_memory_total_mb",
+            "refId": "A",
+            "legendFormat": "Total Memory (MB)"
+          }
+        ],
+        "gridPos": {"h": 8, "w": 8, "x": 16, "y": 8},
+        "fieldConfig": {
+          "defaults": {
+            "unit": "MB",
+            "color": {"mode": "value"}
+          }
+        }
+      }
+    ],
+    "time": {"from": "now-1h", "to": "now"},
+    "refresh": "30s",
+    "schemaVersion": 27,
+    "version": 1
+  }
+}

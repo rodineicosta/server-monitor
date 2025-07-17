@@ -1,0 +1,36 @@
+# Configurações sensíveis
+configs/sites.conf
+configs/prometheus.yml
+configs/realtime_config.json
+configs/crontab/crontab_backup.txt
+
+# Logs - podem conter informações sensíveis
+logs/
+*.log
+
+# Dados do Prometheus
+data/
+
+# Arquivos PID dos serviços
+services/*.pid
+
+# Ambiente virtual Python
+venv/
+
+# Arquivos temporários
+*.tmp
+*.bak
+*~
+
+# Arquivos de sistema macOS
+.DS_Store
+
+# Backups de crontab
+*crontab*.txt
+
+# Arquivos de configuração com credenciais
+*.conf
+!*.conf.example
+
+# Métricas temporárias
+metrics.txt

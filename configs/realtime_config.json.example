@@ -1,0 +1,21 @@
+{
+    "monitoring": {
+        "interval_seconds": 120,
+        "log_retention_hours": 24,
+        "alert_thresholds": {
+            "bot_spike_percent": 200,
+            "attack_threshold": 10,
+            "request_rate_per_ip": 100,
+            "suspicious_ip_threshold": 5
+        }
+    },
+    "log_sources": {
+        "site1": "/path/to/site1/access_log",
+        "site2": "/path/to/site2/access_log",
+        "site3": "/path/to/site3/access_log"
+    },
+    "prometheus": {
+        "pushgateway_url": "localhost:9091",
+        "job_name": "realtime-web-analytics"
+    }
+}

@@ -1,0 +1,133 @@
+# my global config
+global:
+  scrape_interval: 15s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
+  evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.
+  scrape_timeout: 5s # Timeout reduzido para 5s (padrão era 10s)
+
+# Alertmanager configuration
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          # - alertmanager:9093
+
+# Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
+rule_files:
+  # - "first_rules.yml"
+  # - "second_rules.yml"
+
+# A scrape configuration containing exactly one endpoint to scrape:
+# Here it's Prometheus itself.
+scrape_configs:
+  - job_name: 'blackbox'
+    metrics_path: /probe
+    scrape_timeout: 3s  # Timeout específico para sites mais rápido
+    params:
+      module: [http_2xx]  # Verifica se retorna HTTP 200
+    static_configs:
+      - targets:
+        # Sites HTTP serão inseridos automaticamente aqui
+        {{SITES_HTTP_TARGETS}}
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: localhost:9115  # Endereço do Blackbox Exporter
+
+  # Job para coletar métricas do servidor via Pushgateway
+  - job_name: 'pushgateway'
+    static_configs:
+      - targets: ['localhost:9091']
+
+  # ====================================================
+  # JOBS DE SEGURANÇA E ANÁLISE WEB (Blackbox Integrado)
+  # ====================================================
+
+  # Verificação de arquivos sensíveis expostos
+  - job_name: 'security-sensitive-files'
+    metrics_path: /probe
+    params:
+      module: [security_sensitive_files]
+    static_configs:
+      - targets:
+        # Combinações de sites + paths sensíveis serão inseridas aqui
+        {{SECURITY_SENSITIVE_TARGETS}}
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: localhost:9115
+
+  # Verificação de páginas de login WordPress
+  - job_name: 'security-wp-login'
+    metrics_path: /probe
+    params:
+      module: [security_wp_login]
+    static_configs:
+      - targets:
+        # URLs de login WordPress serão inseridas aqui
+        {{SECURITY_WP_LOGIN_TARGETS}}
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: localhost:9115
+
+  # Teste de rate limiting (proteção contra bots)
+  - job_name: 'security-rate-limiting'
+    metrics_path: /probe
+    params:
+      module: [security_rate_limit]
+    scrape_interval: 5m  # Intervalo maior para não ser bloqueado
+    static_configs:
+      - targets:
+        # Sites para teste de rate limiting serão inseridos aqui
+        {{SECURITY_RATE_LIMIT_TARGETS}}
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: localhost:9115
+
+  # Verificação de headers de segurança
+  - job_name: 'security-headers'
+    metrics_path: /probe
+    params:
+      module: [security_headers]
+    static_configs:
+      - targets:
+        # Sites para verificação de headers serão inseridos aqui
+        {{SECURITY_HEADERS_TARGETS}}
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: localhost:9115
+
+  # Detecção de WAF (Web Application Firewall)
+  - job_name: 'security-waf-detection'
+    metrics_path: /probe
+    params:
+      module: [security_waf_detection]
+    scrape_interval: 10m  # Intervalo maior para não triggerar WAF
+    static_configs:
+      - targets:
+        # Sites para detecção de WAF serão inseridos aqui
+        {{SECURITY_WAF_TARGETS}}
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: localhost:9115
